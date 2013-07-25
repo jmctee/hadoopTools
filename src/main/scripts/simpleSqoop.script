@@ -1,0 +1,1 @@
+sqoop import --connect jdbc:postgresql://hadoop-dn3:5432/solar_accounts --username hadoopuser --password password --table accounts --target-dir /solar/accounts

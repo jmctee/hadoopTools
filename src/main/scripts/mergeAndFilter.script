@@ -1,0 +1,3 @@
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/solar_and_wx
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/solar_and_wx_grouped_and_sorted_by_day
+pig -P ../pig/pigCluster.properties ../pig/mergeAndFilter.pig 2>&1 | grep -v deprecated

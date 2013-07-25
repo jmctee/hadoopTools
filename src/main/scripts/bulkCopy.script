@@ -1,0 +1,2 @@
+hadoop fs -put ../resources/raw_* hdfs://hadoop-nn:8020/solar/
+hadoop fs -put ../resources/doNotCall hdfs://hadoop-nn:8020/solar/

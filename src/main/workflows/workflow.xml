@@ -1,0 +1,61 @@
+<workflow-app xmlns='uri:oozie:workflow:0.3' name='process-solar-accounts'>
+
+    <start to='normalizeData'/>
+
+    <action name="normalizeData">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <prepare>
+                <delete path="${weather}"/>
+                <delete path="${sunrise_sunset}"/>
+                <delete path="${solar}"/>
+            </prepare>
+
+            <configuration>
+                <property>
+                    <name>pig.additional.jars</name>
+                    <value>
+                        ./lib/hadoop_tools-0.1.jar
+                    </value>
+                </property>
+                <property>
+                    <name>udf.import.list</name>
+                    <value>
+                        com.jeklsoft.hadoop.piggybank
+                    </value>
+                </property>
+            </configuration>
+
+            <script>pig/normalize.pig</script>
+
+            <argument>-param</argument>
+            <argument>raw_solar=${raw_solar}</argument>
+
+            <argument>-param</argument>
+            <argument>raw_sunrise_sunset=${raw_sunrise_sunset}</argument>
+
+            <argument>-param</argument>
+            <argument>raw_wx=${raw_wx}</argument>
+
+            <argument>-param</argument>
+            <argument>solar=${solar}</argument>
+
+            <argument>-param</argument>
+            <argument>sunrise_sunset=${sunrise_sunset}</argument>
+
+            <argument>-param</argument>
+            <argument>weather=${weather}</argument>
+        </pig>
+        <ok to="end"/>
+        <error to="normalizeDataFailed"/>
+    </action>
+
+    <kill name="normalizeDataFailed">
+        <message>normalizeData failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name='end'/>
+
+</workflow-app>

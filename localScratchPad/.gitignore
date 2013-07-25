@@ -1,0 +1,15 @@
+weather
+sunrise_sunset
+solar
+accounts
+solar_and_wx
+daytime_solar_readings
+accounts_with_solar
+solar_and_wx_grouped_and_sorted_by_day
+TempStatsStore
+accountsToContact
+metastore_db
+nonSolarAccounts
+solarAccounts
+*.log
+.*.crc

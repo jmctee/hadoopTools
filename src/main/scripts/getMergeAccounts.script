@@ -1,0 +1,6 @@
+rm -Rf tmp
+mkdir tmp
+cd tmp
+hadoop fs -getmerge hdfs://hadoop-nn:8020/solar/accounts accounts
+ls -a .
+cat accounts

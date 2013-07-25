@@ -1,0 +1,2 @@
+export OOZIE_URL="http://hadoop-nn:11000/oozie"
+oozie job -config ../workflow.properties -run

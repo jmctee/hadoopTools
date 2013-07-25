@@ -1,0 +1,6 @@
+cd /Users/joemctee/Desktop/Hadoop_talk/hadoop_tools
+hadoop fs -rm -r hdfs://hadoop-nn:8020/workflows
+hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows
+hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows/lib
+hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows/pig
+hadoop fs -put build/output/lib/*.jar hdfs://hadoop-nn:8020/workflows/lib/

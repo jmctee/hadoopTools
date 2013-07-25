@@ -1,0 +1,1 @@
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/accounts

@@ -1,0 +1,4 @@
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/sunrise_sunset
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/solar
+hadoop fs -rm -r hdfs://hadoop-nn:8020/solar/weather
+pig -P ../pig/pigCluster.properties ../pig/normalize.pig 2>&1 | grep -v deprecated

@@ -1,0 +1,3 @@
+cd /Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/localHive/
+export HIVE_ARGS="-d resourcePath=/Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/src/main/resources -d resultPath=/Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/localHive / --hiveconf mapreduce.task.io.sort.mb=1"
+hive $HIVE_ARGS -f ../src/main/hive/getSolarAccounts2.hql
