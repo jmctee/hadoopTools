@@ -1,4 +1,4 @@
 groovy createDb.groovy
 groovy populateDb.groovy 1 3
-echo "Verifying what is in the DB... (will need to enter password"
+echo "Verifying what is in the DB... (will need to enter password)"
 cat select.sql | psql -h hadoop-dn3 -d solar_accounts -U hadoopuser

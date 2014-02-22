@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+defaultTasks 'clean', 'build', 'installApp'
+
+version = 0.1
+sourceCompatibility = 1.6
+
+mainClassName = 'com.jeklsoft.droplet.ClusterCreator'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'joda-time:joda-time:1.6.1'
+  compile 'org.codehaus.groovy:groovy-all:2.1.5'
+  compile 'org.apache.commons:commons-lang3:3.0'
+  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.6'
+  compile 'com.github.kevinsawicki:http-request:3.1'
+  compile 'com.google.guava:guava:15.0'
+
+  testCompile 'junit:junit:4.11'
+}
