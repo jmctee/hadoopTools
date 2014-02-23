@@ -1,2 +1,2 @@
 export HIVE_ARGS="-d resourcePath=/solar/ -d resultPath=/solar/"
-hive $HIVE_ARGS -f ../getSolarAccounts1.hql
+hive $HIVE_ARGS -f ../hive/getSolarAndNonSolarAccounts.hql
