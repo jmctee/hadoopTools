@@ -1,7 +1,7 @@
 DEFINE IS_DAYTIME_READING DaytimeFilterUdf('path_to_sunrise_sunset_data');
 DEFINE BUILD_YYYYMMDD BuildYyyyMmDdUdf();
 
-accounts = LOAD '${accounts}'
+accounts = LOAD '$accounts'
     USING PigStorage(',') AS
         (id:long,
         account_identifier:chararray,
@@ -14,13 +14,13 @@ accounts = LOAD '${accounts}'
         system_capacity:double,
         last_updated:chararray);
 
-solar = LOAD '${solar}'
+solar = LOAD '$solar'
     USING PigStorage(',') AS
         (account_id:chararray,
          time_of_measurement:long,
          power:double);
 
-weather = LOAD '${weather}'
+weather = LOAD '$weather'
     USING PigStorage(',') AS
         (postal_code:chararray,
          time_of_measurement:long,
@@ -63,7 +63,7 @@ solar_and_wx = FOREACH joined_solar_and_wx
 -- Defect #1234 - input data was found to have duplicate records, need to clean them.
 distinct_solar_and_wx = DISTINCT solar_and_wx;
 
-STORE distinct_solar_and_wx INTO '${solar_and_wx}' USING PigStorage(',');
+STORE distinct_solar_and_wx INTO '$solar_and_wx' USING PigStorage(',');
 
 groupedByDay = GROUP distinct_solar_and_wx BY (id, yyyymmdd);
 
@@ -76,6 +76,6 @@ sortedAndGroupedByDay = FOREACH groupedByDay {
 -- DESCRIBE sortedAndGroupedByDay;
 -- sortedAndGroupedByDay: {group: (id: long,yyyymmdd: long),sortedDailyData: {(id: long,account_id: chararray,system_capacity: double,
 --                                                                             yyyymmdd: long,time_of_measurement: long,power: double,
---                                                                             temperature: double,cloud_cover: double)}}
+--                                                                             temperature: double,cloud_cover: double)
 
-STORE sortedAndGroupedByDay INTO '${solar_and_wx_grouped_and_sorted_by_day}' USING PigStorage(',');
+STORE sortedAndGroupedByDay INTO '$solar_and_wx_grouped_and_sorted_by_day' USING PigStorage(',');

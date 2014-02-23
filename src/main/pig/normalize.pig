@@ -1,6 +1,6 @@
 DEFINE DATE_TIME_NORMALIZING_UDF DateTimeNormalizingUdf();
 
-raw_solar = LOAD '${raw_solar}'
+raw_solar = LOAD '$raw_solar'
     USING PigStorage(',') AS
         (account_id:chararray,
          time_of_measurement:chararray,
@@ -9,14 +9,14 @@ raw_solar = LOAD '${raw_solar}'
          max_voltage:double,
          power:double);
 
-raw_sunrise_sunset = LOAD '${raw_sunrise_sunset}'
+raw_sunrise_sunset = LOAD '$raw_sunrise_sunset'
     USING PigStorage(',') AS
         (postal_code:chararray,
          day:chararray,
          sunrise:chararray,
          sunset:chararray);
 
-raw_wx = LOAD '${raw_wx}'
+raw_wx = LOAD '$raw_wx'
     USING PigStorage(',') AS
         (postal_code:chararray,
          time_of_measurement:chararray,
@@ -44,8 +44,8 @@ weather = FOREACH raw_wx
         temperature AS temperature,
         cloud_cover AS cloud_cover;
 
-STORE solar INTO '${solar}' USING PigStorage(',');
+STORE solar INTO '$solar' USING PigStorage(',');
 
-STORE sunrise_sunset INTO '${sunrise_sunset}' USING PigStorage(',');
+STORE sunrise_sunset INTO '$sunrise_sunset' USING PigStorage(',');
 
-STORE weather INTO '${weather}' USING PigStorage(',');
+STORE weather INTO '$weather' USING PigStorage(',');
