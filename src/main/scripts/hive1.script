@@ -1,7 +1,2 @@
-cd /Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/localHive/
-export HIVE_ARGS="-d resourcePath=/Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/src/main/resources -d resultPath=/Users/joemctee/Desktop/Hadoop_talk/hadoop_tools/localHive/"
-hive $HIVE_ARGS -f ../src/main/hive/getSolarAccounts1.hql
-
-# TODO: Get this working on actual cluster
-#export HIVE_ARGS="-d resourcePath=hdfs://hadoop-nn:8020/solar/ -d resultPath=hdfs://hadoop-nn:8020/solar/"
-#hive $HIVE_ARGS -f getSolarAccounts1.hql
+export HIVE_ARGS="-d resourcePath=/solar/ -d resultPath=/solar/"
+hive $HIVE_ARGS -f ../getSolarAccounts1.hql
