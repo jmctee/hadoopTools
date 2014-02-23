@@ -1,1 +1,1 @@
-sqoop import --connect jdbc:postgresql://hadoop-dn3:5432/solar_accounts --username hadoopuser --password password --table accounts --incremental append --check-column last_updated --last-value '2000-01-01' --target-dir /solar/accounts
+sqoop import --connect jdbc:postgresql://hadoop-dn3:5432/solar_accounts --username hadoopuser --password-file /user/root/pg_password --table accounts --incremental append --check-column last_updated --last-value '2000-01-01' --target-dir /solar/accounts
