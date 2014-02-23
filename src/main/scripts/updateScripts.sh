@@ -12,6 +12,10 @@ scp src/main/pig/*.pig root@hadoop-nn:pig/
 scp src/main/resources/pigCluster.properties root@hadoop-nn:pig/
 scp src/main/resources/pigScript.properties root@hadoop-nn:pig/
 
+ssh root@hadoop-nn 'rm -Rf hive'
+ssh root@hadoop-nn 'mkdir hive'
+scp src/main/hive/*.hql root@hadoop-nn:hive/
+
 ssh root@hadoop-nn 'rm -Rf lib'
 ssh root@hadoop-nn 'mkdir lib'
 scp build/output/lib/*.jar root@hadoop-nn:lib/
