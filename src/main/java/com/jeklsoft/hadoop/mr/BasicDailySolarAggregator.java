@@ -20,6 +20,10 @@ import org.apache.hadoop.mapred.TextOutputFormat;
 
 import com.jeklsoft.hadoop.domain.SolarReading;
 
+// TODO: This pattern, using JobConf, is deprecated.
+//       See http://stackoverflow.com/questions/8603788/hadoop-jobconf-class-is-deprecated-need-updated-example
+//       Need to review and refactor.
+
 public class BasicDailySolarAggregator {
 
     public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, Text> {

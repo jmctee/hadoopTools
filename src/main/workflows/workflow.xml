@@ -1,4 +1,4 @@
-<workflow-app xmlns='uri:oozie:workflow:0.3' name='process-solar-accounts'>
+<workflow-app xmlns='uri:oozie:workflow:0.4' name='process-solar-accounts'>
 
     <start to='normalizeData'/>
 
@@ -15,12 +15,6 @@
 
             <configuration>
                 <property>
-                    <name>pig.additional.jars</name>
-                    <value>
-                        ./lib/hadoop_tools-0.1.jar
-                    </value>
-                </property>
-                <property>
                     <name>udf.import.list</name>
                     <value>
                         com.jeklsoft.hadoop.piggybank
@@ -28,7 +22,7 @@
                 </property>
             </configuration>
 
-            <script>pig/normalize.pig</script>
+            <script>../pig/normalize.pig</script>
 
             <argument>-param</argument>
             <argument>raw_solar=${raw_solar}</argument>

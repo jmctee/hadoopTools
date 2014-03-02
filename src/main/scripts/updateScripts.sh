@@ -28,9 +28,3 @@ scp binaries/postgresql-9.1-903.jdbc4.jar root@hadoop-nn:.groovy/lib/
 ssh root@hadoop-nn 'rm -Rf resources'
 ssh root@hadoop-nn 'mkdir resources'
 scp -r src/main/resources root@hadoop-nn:
-
-hadoop fs -rm -R hdfs://hadoop-nn:8020/workflows
-hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows
-hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows/lib
-hadoop fs -mkdir hdfs://hadoop-nn:8020/workflows/pig
-hadoop fs -put build/output/lib/*.jar hdfs://hadoop-nn:8020/workflows/lib/
