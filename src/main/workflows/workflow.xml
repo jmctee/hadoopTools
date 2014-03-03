@@ -2,6 +2,8 @@
 
     <start to='normalizeData'/>
 
+    <!-- TODO: Get sqoop action working here. -->
+
     <action name="normalizeData">
         <pig>
             <job-tracker>${jobTracker}</job-tracker>
@@ -101,12 +103,16 @@
                     <value>com.jeklsoft.hadoop.mr.BasicMapper</value>
                 </property>
                 <property>
+                    <name>mapred.combiner.class</name>
+                    <value>com.jeklsoft.hadoop.mr.SolarReadingReducer</value>
+                </property>
+                <property>
                     <name>mapred.reducer.class</name>
-                    <value>com.jeklsoft.hadoop.mr.BasicReducer</value>
+                    <value>com.jeklsoft.hadoop.mr.ImageGeneratingReducer</value>
                 </property>
                 <property>
                     <name>mapred.input.key.class</name>
-                    <value>org.apache.hadoop.io.LongWritable</value>
+                    <value>org.apache.hadoop.io.Text</value>
                 </property>
                 <property>
                     <name>mapred.input.value.class</name>
@@ -126,7 +132,7 @@
                 </property>
                 <property>
                     <name>mapred.output.format.class</name>
-                    <value>org.apache.hadoop.mapred.TextOutputFormat</value>
+                    <value>com.jeklsoft.hadoop.mr.DailyOutputFormat</value>
                 </property>
 
                 <property>
@@ -136,10 +142,6 @@
                 <property>
                     <name>mapred.output.dir</name>
                     <value>${daily}</value>
-                </property>
-                <property>
-                    <name>mapred.job.queue.name</name>
-                    <value>default</value>
                 </property>
             </configuration>
         </map-reduce>
