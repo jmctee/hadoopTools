@@ -82,9 +82,44 @@
             <argument>-param</argument>
             <argument>solar_and_wx_grouped_and_sorted_by_day=${solar_and_wx_grouped_and_sorted_by_day}</argument>
         </pig>
-        <ok to="end"/>
+        <ok to="generateSalesData"/>
         <error to="kill"/>
     </action>
+
+    <fork name="generateSalesData">
+        <path start="generateSolarAndNonSolarUsers"/>
+        <path start="generateContactList"/>
+    </fork>
+
+    <action name="generateSolarAndNonSolarUsers">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <script>../hive/getSolarAndNonSolarAccounts.hql</script>
+
+            <param>resourcePath=${resourcePath}</param>
+            <param>resultPath=${resultPath}</param>
+        </hive>
+        <ok to="salesDataGenerated"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="generateContactList">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <script>../hive/getAccountsToContact.hql</script>
+
+            <param>resourcePath=${resourcePath}</param>
+            <param>resultPath=${resultPath}</param>
+        </hive>
+        <ok to="salesDataGenerated"/>
+        <error to="kill"/>
+    </action>
+
+    <join name="salesDataGenerated" to="end"/>
 
     <kill name="kill">
         <message>${wf:lastErrorNode()} failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
