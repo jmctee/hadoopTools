@@ -42,12 +42,52 @@
             <argument>-param</argument>
             <argument>weather=${weather}</argument>
         </pig>
-        <ok to="end"/>
-        <error to="normalizeDataFailed"/>
+        <ok to="mergeAndFilterData"/>
+        <error to="kill"/>
     </action>
 
-    <kill name="normalizeDataFailed">
-        <message>normalizeData failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    <action name="mergeAndFilterData">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <prepare>
+                <delete path="${solar_and_wx}"/>
+                <delete path="${solar_and_wx_grouped_and_sorted_by_day}"/>
+            </prepare>
+
+            <configuration>
+                <property>
+                    <name>udf.import.list</name>
+                    <value>
+                        com.jeklsoft.hadoop.piggybank
+                    </value>
+                </property>
+            </configuration>
+
+            <script>../pig/mergeAndFilter.pig</script>
+
+            <argument>-param</argument>
+            <argument>accounts=${accounts}</argument>
+
+            <argument>-param</argument>
+            <argument>solar=${solar}</argument>
+
+            <argument>-param</argument>
+            <argument>weather=${weather}</argument>
+
+            <argument>-param</argument>
+            <argument>solar_and_wx=${solar_and_wx}</argument>
+
+            <argument>-param</argument>
+            <argument>solar_and_wx_grouped_and_sorted_by_day=${solar_and_wx_grouped_and_sorted_by_day}</argument>
+        </pig>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>${wf:lastErrorNode()} failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>
 
     <end name='end'/>
