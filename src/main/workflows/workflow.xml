@@ -82,6 +82,67 @@
             <argument>-param</argument>
             <argument>solar_and_wx_grouped_and_sorted_by_day=${solar_and_wx_grouped_and_sorted_by_day}</argument>
         </pig>
+        <ok to="createImageFiles"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="createImageFiles">
+        <map-reduce>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <prepare>
+                <delete path="${daily}"/>
+            </prepare>
+
+            <configuration>
+                <property>
+                    <name>mapred.mapper.class</name>
+                    <value>com.jeklsoft.hadoop.mr.BasicMapper</value>
+                </property>
+                <property>
+                    <name>mapred.reducer.class</name>
+                    <value>com.jeklsoft.hadoop.mr.BasicReducer</value>
+                </property>
+                <property>
+                    <name>mapred.input.key.class</name>
+                    <value>org.apache.hadoop.io.LongWritable</value>
+                </property>
+                <property>
+                    <name>mapred.input.value.class</name>
+                    <value>org.apache.hadoop.io.Text</value>
+                </property>
+                <property>
+                    <name>mapred.input.format.class</name>
+                    <value>org.apache.hadoop.mapred.TextInputFormat</value>
+                </property>
+                <property>
+                    <name>mapred.output.key.class</name>
+                    <value>org.apache.hadoop.io.Text</value>
+                </property>
+                <property>
+                    <name>mapred.output.value.class</name>
+                    <value>org.apache.hadoop.io.Text</value>
+                </property>
+                <property>
+                    <name>mapred.output.format.class</name>
+                    <value>org.apache.hadoop.mapred.TextOutputFormat</value>
+                </property>
+
+                <property>
+                    <name>mapred.input.dir</name>
+                    <value>${solar_and_wx}</value>
+                </property>
+                <property>
+                    <name>mapred.output.dir</name>
+                    <value>${daily}</value>
+                </property>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>default</value>
+                </property>
+            </configuration>
+        </map-reduce>
         <ok to="generateSalesData"/>
         <error to="kill"/>
     </action>
