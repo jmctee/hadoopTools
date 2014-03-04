@@ -1,1 +1,1 @@
-sqoop job --exec sqoopAccounts
+sqoop job --meta-connect jdbc:hsqldb:hsql://hadoop-nn:16000/sqoop --exec sqoopAccounts

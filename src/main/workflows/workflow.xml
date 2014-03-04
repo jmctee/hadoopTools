@@ -1,8 +1,30 @@
 <workflow-app xmlns='uri:oozie:workflow:0.4' name='process-solar-accounts'>
 
-    <start to='normalizeData'/>
+    <start to='sqoopAccounts'/>
 
-    <!-- TODO: Get sqoop action working here. -->
+    <action name="sqoopAccounts">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+
+            <configuration>
+                <!-- Setting this property to work around a possible bug in sqoop when password file is used -->
+                <!-- See http://stackoverflow.com/questions/19735672/sqoop-password-file-option-closes-the-filesystem-reference-causing-java-io-ioe -->
+                <property>
+                    <name>fs.hdfs.impl.disable.cache</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+
+            <arg>job</arg>
+            <arg>--meta-connect</arg>
+            <arg>${sqoopMetastoreUrl}</arg>
+            <arg>--exec</arg>
+            <arg>sqoopAccounts</arg>
+        </sqoop>
+        <ok to="normalizeData"/>
+        <error to="kill"/>
+    </action>
 
     <action name="normalizeData">
         <pig>
